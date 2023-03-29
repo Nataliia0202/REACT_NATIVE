@@ -54,6 +54,7 @@ export const register = createAsyncThunk(
 );
 
 export const uploadPhotoToStorage = async (uri) => {
+    
   const response = await fetch(uri);
   const file = await response.blob();
   const imageId = uuid.v4();

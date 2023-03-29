@@ -61,7 +61,7 @@ export const RegistrationScreen = ({ navigation }) => {
     if (login === "" || email === "" || password === "") {
       return Alert.alert("Заполните поля");
     } else {
-        const avatar = await uploadPhotoToStorage();
+    
       dispatch(register({ email, password, login, avatar }));
       console.log({ email, password, login, avatar });
     }
@@ -82,7 +82,7 @@ export const RegistrationScreen = ({ navigation }) => {
     console.log(result);
 
       if (!result.canceled) {
-        setAvatar(result.assets[0].uri);
+        setAvatar(await uploadPhotoToStorage(result.assets[0].uri));
     }
       
   };
@@ -99,20 +99,8 @@ export const RegistrationScreen = ({ navigation }) => {
     }
   };
 
-  // const setFocusCheng = () => {
-  //   setIsShowkeyboard(true);
-  //   if (focus === false) {
-  //     setFocus(true);
-  //   }
-  //   if (focus === true) {
-  //     setFocus(false);
-  //   }
-
-  // }
-
-  // const setOnBlur = () => {
-  //   setFocus(false);
-  // }
+   
+    
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
