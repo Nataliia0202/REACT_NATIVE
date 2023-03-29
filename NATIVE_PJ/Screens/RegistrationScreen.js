@@ -17,7 +17,8 @@ import {
 } from "react-native";
 const imageBg = require("../assets/images/PhotoBG.jpg");
 import { useDispatch } from "react-redux";
-import SVGImg from "../assets/images/add.svg"
+import SVGImg from "../assets/images/add.svg";
+import SVGDel from "../assets/images/del.svg";
 import * as ImagePicker from "expo-image-picker";
 import { uploadPhotoToStorage } from "../redux/userOperations";
 import { register } from "../redux/userOperations";
@@ -117,9 +118,15 @@ export const RegistrationScreen = ({ navigation }) => {
                     uri: avatar,
                   }}
                 />
-                <TouchableOpacity style={styles.svg} onPress={pickImage}>
-                  <SVGImg width={25} height={25} />
-                </TouchableOpacity>
+                {avatar === null ? (
+                  <TouchableOpacity style={styles.svg} onPress={pickImage}>
+                    <SVGImg width={25} height={25} />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity style={styles.svgDel} onPress={pickImage}>
+                    <SVGDel width={40} height={40} />
+                  </TouchableOpacity>
+                )}
               </View>
 
               <Text style={styles.text}>Регистрация</Text>
@@ -286,6 +293,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 14,
     right: -12,
+  },
+  svgDel: {
+    position: "absolute",
+    bottom: 10,
+    right: -20,
   },
   image: {
     flex: 1,

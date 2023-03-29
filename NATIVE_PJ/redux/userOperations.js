@@ -8,8 +8,14 @@ import {
 } from "firebase/auth";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import uuid from "react-native-uuid";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import { storage } from "../firebase/config";
+
 
 
 
@@ -67,6 +73,10 @@ export const uploadPhotoToStorage = async (uri) => {
   console.log(storageUrlPhoto);
   return storageUrlPhoto;
 };
+
+export const DeletUploadPhotoToStorage = async () => {
+    
+}
 
 export const setAvatar = createAsyncThunk(
   "auth/setAvatar",
