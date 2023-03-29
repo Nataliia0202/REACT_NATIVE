@@ -19,6 +19,7 @@ const imageBg = require("../assets/images/PhotoBG.jpg");
 import { useDispatch } from "react-redux";
 import SVGImg from "../assets/images/add.svg"
 import * as ImagePicker from "expo-image-picker";
+import { uploadPhotoToStorage } from "../redux/userOperations";
 
 export const RegistrationScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ export const RegistrationScreen = ({ navigation }) => {
     setLogin("");
     setEmail("");
     setPassword("");
-    Keyboard.dismiss();
+    
   };
 
   const pickImage = async () => {
@@ -78,8 +79,10 @@ export const RegistrationScreen = ({ navigation }) => {
 
     console.log(result);
 
-    setImage(result.assets[0].uri);
-    setAvatar(await uploadPhotoToStorage(result.assets[0].uri));
+      if (!result.canceled) {
+        setAvatar(result.assets[0].uri);
+    }
+      
   };
 
   // const onTransition = () => {
@@ -110,7 +113,7 @@ export const RegistrationScreen = ({ navigation }) => {
   // }
 
   return (
-    <TouchableWithoutFeedback onPress={keyboardHide}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ImageBackground source={imageBg} resizeMode="cover" style={styles.image}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -121,7 +124,7 @@ export const RegistrationScreen = ({ navigation }) => {
                 <Image
                   style={styles.avatar}
                   source={{
-                    uri: image,
+                    uri: avatar,
                   }}
                 />
                 <TouchableOpacity style={styles.svg} onPress={pickImage}>
@@ -213,17 +216,17 @@ const styles = StyleSheet.create({
     position: "relative",
     // marginHorizontal: 16,
     alignItems: "stretch",
-
+    padding: 16,
     backgroundColor: "#FFFFFF",
     height: 520,
-
+    paddingBottom: 45,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingHorizontal: 16,
   },
   text: {
     fontFamily: "Roboto-Bold",
-
+    
     fontSize: 30,
     textAlign: "center",
     letterSpacing: 0.01,
