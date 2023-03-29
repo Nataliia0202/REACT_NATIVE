@@ -74,9 +74,14 @@ export const uploadPhotoToStorage = async (uri) => {
   return storageUrlPhoto;
 };
 
-export const DeletUploadPhotoToStorage = async () => {
-    
-}
+// export const DeletUploadPhotoToStorage = async (uri) => {
+//     const response = await fetch(uri);
+//     const file = await response.blob();
+//     const imageId = uuid.v4();
+//     const DeletRef = ref(storage, `avatar/${imageId}`);
+//     deleteObject(DeletRef);
+      
+// }
 
 export const setAvatar = createAsyncThunk(
   "auth/setAvatar",

@@ -20,7 +20,10 @@ import { useDispatch } from "react-redux";
 import SVGImg from "../assets/images/add.svg";
 import SVGDel from "../assets/images/del.svg";
 import * as ImagePicker from "expo-image-picker";
-import { uploadPhotoToStorage } from "../redux/userOperations";
+import {
+  uploadPhotoToStorage,
+  DeletUploadPhotoToStorage,
+} from "../redux/userOperations";
 import { register } from "../redux/userOperations";
 
 export const RegistrationScreen = ({ navigation }) => {
@@ -86,8 +89,9 @@ export const RegistrationScreen = ({ navigation }) => {
         setAvatar(await uploadPhotoToStorage(result.assets[0].uri));
     }
       
-  };
-
+    };
+    
+    
   // const onTransition = () => {
   //   navigation.navigate("Логин");
   // };
