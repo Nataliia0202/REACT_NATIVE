@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import SVGImg from "../assets/images/add.svg"
 import * as ImagePicker from "expo-image-picker";
 import { uploadPhotoToStorage } from "../redux/userOperations";
+import { register } from "../redux/userOperations";
 
 export const RegistrationScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export const RegistrationScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(true);
 
-  const [image, setImage] = useState(null);
+  
   const [avatar, setAvatar] = useState(null);
 
   const [isFocused, setIsFocused] = useState(false);
@@ -56,10 +57,11 @@ export const RegistrationScreen = ({ navigation }) => {
     };
   }, []);
 
-  const keyboardHide = () => {
+  const keyboardHide = async () => {
     if (login === "" || email === "" || password === "") {
       return Alert.alert("Заполните поля");
     } else {
+        const avatar = await uploadPhotoToStorage();
       dispatch(register({ email, password, login, avatar }));
       console.log({ email, password, login, avatar });
     }
@@ -219,14 +221,15 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: "#FFFFFF",
     height: 520,
-    paddingBottom: 45,
+    paddingBottom: 25,
+    marginTop: 92,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     paddingHorizontal: 16,
   },
   text: {
     fontFamily: "Roboto-Bold",
-    
+
     fontSize: 30,
     textAlign: "center",
     letterSpacing: 0.01,

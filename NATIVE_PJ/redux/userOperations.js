@@ -59,13 +59,9 @@ export const uploadPhotoToStorage = async (uri) => {
   const imageId = uuid.v4();
 
   const storageRef = ref(storage, `avatar/${imageId}`);
-  await uploadBytes(storageRef, file).then((snapshot) => {
-    console.log("Uploaded a blob or file!");
-  });
-  const storageUrlPhoto = await getDownloadURL(storageRef.snapshot.ref).then(
-    (downloadURL) => {
-      console.log("File available at", downloadURL);
-    }
+  await uploadBytes(storageRef, file)
+  const storageUrlPhoto = await getDownloadURL(
+    ref(storage, `avatar/${imageId}`)
   );
   console.log(storageUrlPhoto);
   return storageUrlPhoto;
