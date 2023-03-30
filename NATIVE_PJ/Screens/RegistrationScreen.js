@@ -91,7 +91,7 @@ export const RegistrationScreen = ({ navigation }) => {
       
     };
     
-    
+   
   // const onTransition = () => {
   //   navigation.navigate("Логин");
   // };
