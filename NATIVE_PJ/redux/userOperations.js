@@ -60,18 +60,22 @@ export const register = createAsyncThunk(
 );
 
 export const uploadPhotoToStorage = async (uri) => {
-    
-  const response = await fetch(uri);
-  const file = await response.blob();
-  const imageId = uuid.v4();
+   try {
+    const response = await fetch(uri);
+    const file = await response.blob();
+    const imageId = uuid.v4();
 
-  const storageRef = ref(storage, `avatar/${imageId}`);
-  await uploadBytes(storageRef, file)
-  const storageUrlPhoto = await getDownloadURL(
-    ref(storage, `avatar/${imageId}`)
-  );
-  console.log(storageUrlPhoto);
-  return storageUrlPhoto;
+    const storageRef = ref(storage, `avatar/${imageId}`);
+    await uploadBytes(storageRef, file);
+    const storageUrlPhoto = await getDownloadURL(
+      ref(storage, `avatar/${imageId}`)
+    );
+    console.log(storageUrlPhoto);
+    return storageUrlPhoto;
+   } catch (error) {
+    Alert.alert("Try again \n", error.message);
+   } 
+  
 };
 
 // export const DeletUploadPhotoToStorage = async (uri) => {

@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { RegistrationScreen } from "./Screens/RegistrationScreen";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-
+import { Login } from "./Screens/LoginScreen";
 import "./firebase/config";
 
 SplashScreen.preventAutoHideAsync();
