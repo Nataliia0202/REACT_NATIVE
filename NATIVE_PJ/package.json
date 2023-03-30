@@ -51,5 +51,10 @@
   "devDependencies": {
     "@babel/core": "^7.20.0"
   },
+  "jsEngine": "hermes",
+  "ios": {
+    "jsEngine": "jsc",
+    "supportsTablet": true
+  },
   "private": true
 }
