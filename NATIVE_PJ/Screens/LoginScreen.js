@@ -114,7 +114,7 @@ export const Login = ({ navigation }) => {
               <TouchableOpacity style={styles.button} onPress={onLogin}>
                 <Text style={styles.textTitel}> Войти </Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("Register")}>
                 <Text style={styles.viewForText}>
                   Нет аккаунта? Зарегистрироваться
                 </Text>

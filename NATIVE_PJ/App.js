@@ -7,9 +7,13 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { Login } from "./Screens/LoginScreen";
 import "./firebase/config";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+
 
 SplashScreen.preventAutoHideAsync();
 
+const AuthStack = createStackNavigator();
 
 
 
@@ -45,9 +49,22 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <RegistrationScreen />
-      </View>
+      <NavigationContainer>
+        <View style={styles.container} onLayout={onLayoutRootView}>
+          <AuthStack.Navigator>
+            <AuthStack.Screen
+              options={{ headerShown: false }}
+              name="Register"
+              component={RegistrationScreen}
+            />
+            <AuthStack.Screen
+              options={{ headerShown: false }}
+              name="Login"
+              component={Login}
+            />
+          </AuthStack.Navigator>
+        </View>
+      </NavigationContainer>
     </Provider>
   );
 }

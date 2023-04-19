@@ -185,7 +185,7 @@ export const RegistrationScreen = ({ navigation }) => {
               <TouchableOpacity style={styles.button} onPress={keyboardHide}>
                 <Text style={styles.textTitel}> Зарегистрироваться </Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
                 <Text style={styles.viewForText}>Уже есть аккаунт? Войти</Text>
               </TouchableOpacity>
             </View>
