@@ -6,20 +6,43 @@ import { RegistrationScreen } from "./Screens/RegistrationScreen";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { Login } from "./Screens/LoginScreen";
+
 import "./firebase/config";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+import { Home } from "./Screens/Home";
 
 SplashScreen.preventAutoHideAsync();
 
 const AuthStack = createStackNavigator();
 
 
+const useRoute = (isAuth) => {
+  if (!isAuth) {
+    return (
+      <AuthStack.Navigator>
+        <AuthStack.Screen
+          options={{ headerShown: false }}
+          name="Register"
+          component={RegistrationScreen}
+        />
+        <AuthStack.Screen
+          options={{ headerShown: false }}
+          name="Login"
+          component={Login}
+        />
+      </AuthStack.Navigator>
+    );
+  }
+  return (
+    <Home/>
+  );
+}
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
-  
+  const routing = useRoute({})
   useEffect(() => {
     async function prepare() {
       try {
@@ -51,18 +74,7 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer>
         <View style={styles.container} onLayout={onLayoutRootView}>
-          <AuthStack.Navigator>
-            <AuthStack.Screen
-              options={{ headerShown: false }}
-              name="Register"
-              component={RegistrationScreen}
-            />
-            <AuthStack.Screen
-              options={{ headerShown: false }}
-              name="Login"
-              component={Login}
-            />
-          </AuthStack.Navigator>
+          {routing}
         </View>
       </NavigationContainer>
     </Provider>
