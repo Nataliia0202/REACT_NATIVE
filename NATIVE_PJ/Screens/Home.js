@@ -30,7 +30,7 @@ export const Home = () => {
               iconName = "view-grid-outline";
             } else if (route.name === "Создать публикацию") {
               iconName = "plus";
-            } else if (route.name === "Профель") {
+            } else if (route.name === "Профиль") {
               iconName = "account-outline";
             }
 
@@ -69,7 +69,7 @@ export const Home = () => {
           }}
         />
         <Tab.Screen name="Создать публикацию" component={CreatePostsScreen} />
-        <Tab.Screen name="Профель" component={ProfileScreen} />
+        <Tab.Screen name="Профиль" component={ProfileScreen} />
       </Tab.Navigator>
     );
 }
