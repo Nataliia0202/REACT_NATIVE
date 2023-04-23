@@ -1,32 +1,28 @@
-import React, { useCallback, useEffect, useState } from "react";
-import * as Font from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { StyleSheet, Text, View } from "react-native";
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
-import "./firebase/config";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import * as Font from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
+import { StyleSheet, Text, View } from 'react-native';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
 
-import { NavigationContainer } from "@react-navigation/native";
-import { Rout } from "./router";
+import { NavigationContainer } from '@react-navigation/native';
+import { Rout } from './router';
 
 SplashScreen.preventAutoHideAsync();
 
-const firebase = require("firebase");
-// Required for side-effects
-require("firebase/firestore");
-
-
-
-
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
-  
+
   useEffect(() => {
     async function prepare() {
       try {
         await Font.loadAsync({
-          "Roboto-Regular": require("./assets/fonts/Roboto-Regular.ttf"),
-          "Roboto-Bold": require("./assets/fonts/Roboto-Bold.ttf"),
+          'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
+          'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
         });
       } catch (e) {
         console.warn(e);
@@ -36,7 +32,6 @@ export default function App() {
     }
     prepare();
   }, []);
-
 
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
@@ -51,8 +46,10 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <View style={styles.container} onLayout={onLayoutRootView}>
-          <Rout/>
+        <View
+          style={styles.container}
+          onLayout={onLayoutRootView}>
+          <Rout />
         </View>
       </NavigationContainer>
     </Provider>
@@ -62,6 +59,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backfaceVisibility: "#fff",
+    backfaceVisibility: '#fff',
   },
 });
