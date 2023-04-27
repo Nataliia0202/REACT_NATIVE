@@ -147,7 +147,9 @@ const name = useSelector(selectName);
   const takePhoto = async () => {
     if (cameraRef) {
       const photo = await cameraRef.takePictureAsync();
+     
       setPhoto(photo.uri);
+      console.log("photo", photo);
     }
   };
  
@@ -201,6 +203,7 @@ console.log("CreatePostsScreen");
                 </TouchableOpacity>
               </Camera>
             )}
+            
             <TouchableOpacity onPress={imageDownloaderHandler}>
               <Text style={styles.text}>Загрузите фото</Text>
             </TouchableOpacity>
