@@ -101,8 +101,10 @@ const name = useSelector(selectName);
         photo,
         commentCounter: 0,
       };
+      console.log(valueObj);
       if (location) valueObj.location = location.coords;
       const docRef = await addDoc(collection(db, "posts"), valueObj);
+      console.log(docRef);
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
@@ -199,9 +201,9 @@ console.log("CreatePostsScreen");
                 </TouchableOpacity>
               </Camera>
             )}
-            <Pressable onPress={imageDownloaderHandler}>
+            <TouchableOpacity onPress={imageDownloaderHandler}>
               <Text style={styles.text}>Загрузите фото</Text>
-            </Pressable>
+            </TouchableOpacity>
 
             <TextInput
               value={imageSignature}
@@ -211,7 +213,11 @@ console.log("CreatePostsScreen");
             />
             <View position="relative">
               <Pressable style={styles.mapButton}>
-                <MaterialCommunityIcons name="map-marker-outline" size={24} color="#BDBDBD"/>
+                <MaterialCommunityIcons
+                  name="map-marker-outline"
+                  size={24}
+                  color="#BDBDBD"
+                />
               </Pressable>
 
               <TextInput
@@ -221,9 +227,9 @@ console.log("CreatePostsScreen");
                 style={styles.input}
               ></TextInput>
             </View>
-            <Pressable onPress={onSubmit} style={styles.button}>
+            <TouchableOpacity onPress={onSubmit} style={styles.button}>
               <Text style={styles.buttonText}>Опубликовать</Text>
-            </Pressable>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -241,7 +247,7 @@ const styles = StyleSheet.create({
   camera: {
     height: 300,
     marginTop: 30,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   photoView: {
     flex: 1,
@@ -309,9 +315,11 @@ const styles = StyleSheet.create({
     paddingLeft: 50,
     height: 44,
     padding: 10,
-    backgroundColor: "#E8E8E8",
+    backgroundColor: "#EEEEEE",
     marginTop: 16,
-    borderRadius: 10,
+    
+    borderBottomColor: "#BDBDBD",
+    borderBottomWidth:1
   },
   mapButton: {
     position: "absolute",
