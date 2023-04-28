@@ -128,6 +128,7 @@ const name = useSelector(selectName);
 
     if (!result.canceled) {
       setPhoto(await uploadPhotoToStorage(result.assets[0].uri));
+      console.log(setPhoto(await uploadPhotoToStorage(result.assets[0].uri)));
     }
     console.log("upload");
   };
@@ -205,12 +206,12 @@ console.log("CreatePostsScreen");
               </Camera>
             )} */}
             <View style={styles.containerIMG}>
-              <Image
+              {photo && <Image
                 style={styles.photo}
                 source={{
                   uri: photo,
                 }}
-              />
+              />}
               <TouchableOpacity onPress={imageDownloaderHandler}>
                 <Text style={styles.text}>Загрузите фото</Text>
               </TouchableOpacity>
