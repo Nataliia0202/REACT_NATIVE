@@ -24,6 +24,7 @@ import { useSelector } from "react-redux";
 import { selectID, selectName } from "../redux/selectors";
 import { useIsFocused } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import { block } from "react-native-reanimated";
 
 export const CreatePostsScreen = ({ navigation }) => {
 const [imageSignature, setImageSignature] = useState("");
@@ -165,7 +166,7 @@ console.log("CreatePostsScreen");
       >
         <ScrollView styles={styles.box} backGroundColor="#fff">
           <View style={styles.container}>
-            {isFocused && (
+            {/* {isFocused && (
               <Camera
                 style={styles.camera}
                 type={type}
@@ -202,18 +203,26 @@ console.log("CreatePostsScreen");
                   </View>
                 </TouchableOpacity>
               </Camera>
-            )}
-            
-            <TouchableOpacity onPress={imageDownloaderHandler}>
-              <Text style={styles.text}>Загрузите фото</Text>
-            </TouchableOpacity>
-
+            )} */}
+            <View style={styles.containerIMG}>
+              <Image
+                style={styles.photo}
+                source={{
+                  uri: photo,
+                }}
+              />
+              <TouchableOpacity onPress={imageDownloaderHandler}>
+                <Text style={styles.text}>Загрузите фото</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
             <TextInput
               value={imageSignature}
               onChangeText={imageTitleHandler}
               placeholder="Название..."
               style={styles.input}
             />
+            </View>
             <View position="relative">
               <Pressable style={styles.mapButton}>
                 <MaterialCommunityIcons
@@ -320,9 +329,9 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "#EEEEEE",
     marginTop: 16,
-    
+
     borderBottomColor: "#BDBDBD",
-    borderBottomWidth:1
+    borderBottomWidth: 1,
   },
   mapButton: {
     position: "absolute",
@@ -342,5 +351,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "white",
     textAlign: "center",
+  },
+  containerIMG: {
+    
+    width: 200,
+    height: 200,
+    backgroundColor: "#F6F6F6",
+    alignSelf: "center",
   },
 });
