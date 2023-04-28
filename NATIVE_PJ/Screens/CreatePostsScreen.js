@@ -127,7 +127,7 @@ const name = useSelector(selectName);
     console.log(result);
 
     if (!result.canceled) {
-      setImageSignature(await uploadPhotoToStorage(result.assets[0].uri));
+      setPhoto(await uploadPhotoToStorage(result.assets[0].uri));
     }
     console.log("upload");
   };
@@ -353,10 +353,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   containerIMG: {
-    
-    width: 200,
+    flex: 1,
+    width: 350,
     height: 200,
     backgroundColor: "#F6F6F6",
     alignSelf: "center",
+    marginTop: 10,
+    marginBottom: 20,
   },
 });

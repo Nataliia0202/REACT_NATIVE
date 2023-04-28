@@ -104,7 +104,11 @@ export const RegistrationScreen = ({ navigation }) => {
     }
   };
 
-   
+   const onSubmit = () => {
+
+     setAvatar(null);
+    
+   };
     
 
   return (
@@ -127,7 +131,7 @@ export const RegistrationScreen = ({ navigation }) => {
                     <SVGImg width={25} height={25} />
                   </TouchableOpacity>
                 ) : (
-                  <TouchableOpacity style={styles.svgDel} onPress={pickImage}>
+                  <TouchableOpacity style={styles.svgDel} onPress={onSubmit}>
                     <SVGDel width={40} height={40} />
                   </TouchableOpacity>
                 )}
