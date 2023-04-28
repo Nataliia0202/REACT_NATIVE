@@ -90,7 +90,7 @@ const name = useSelector(selectName);
   };
 
 
-  const uploadPostToStorage = async () => {
+  const uploadPostToStorage = async() => {
     const photo = await uploadPhotoToStorage();
     console.log(imageSignature, imageLocation, location, photo);
     try {
@@ -103,14 +103,15 @@ const name = useSelector(selectName);
         commentCounter: 0,
       };
       console.log(valueObj);
-      if (location) valueObj.location = location.coords;
+      if (location)
+        valueObj.location = location.coords;
       const docRef = await addDoc(collection(db, "posts"), valueObj);
       console.log(docRef);
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-  };
+  }
 
   const imageLocationHandler = (text) => {
     setImageLocation(text);
