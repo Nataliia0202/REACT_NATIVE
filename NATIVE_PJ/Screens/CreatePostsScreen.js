@@ -65,9 +65,7 @@ const name = useSelector(selectName);
     })();
   }, []);
 
-  const imageTitleHandler = (text) => {
-    setImageSignature(text);
-  };
+  
 
 
   const uploadPhotoToStorage = async (uri) => {
@@ -89,9 +87,11 @@ const name = useSelector(selectName);
     
   };
 
+  
+  
 
-  const uploadPostToStorage = async() => {
-    const photo = await uploadPhotoToStorage();
+  const uploadPostToStorage = async () => {
+    const photo = await uploadPhotoToStorage(uri);
     console.log(imageSignature, imageLocation, location, photo);
     try {
       const valueObj = {
@@ -103,16 +103,19 @@ const name = useSelector(selectName);
         commentCounter: 0,
       };
       console.log(valueObj);
-      if (location)
-        valueObj.location = location.coords;
+      if (location) valueObj.location = location.coords;
       const docRef = await addDoc(collection(db, "posts"), valueObj);
       console.log(docRef);
       console.log("Document written with ID: ", docRef.id);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-  }
+  };
 
+  const imageTitleHandler = (text) => {
+  setImageSignature(text);
+  };
+  
   const imageLocationHandler = (text) => {
     setImageLocation(text);
   };
@@ -140,6 +143,7 @@ const name = useSelector(selectName);
     setPhoto(null);
     navigation.navigate("Публикации");
   };
+
   const onSubmitClear = () => {
     
     setImageSignature("");
@@ -297,14 +301,12 @@ const styles = StyleSheet.create({
   },
   camera: {
     height: 250,
-
-    borderRadius: 8,
   },
   cameraWr: {
-    flex: 1,
+    justifyContent: "center",
     width: 350,
     height: 350,
-    marginTop: 20,
+   
     borderRadius: 8,
     marginLeft: "auto",
     marginRight: "auto",
@@ -391,16 +393,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   containerIMG: {
-    flex: 1,
+    flex: 2,
     width: 300,
     height: 350,
     backgroundColor: "#F6F6F6",
     alignSelf: "center",
     marginTop: 10,
-    marginBottom: 20,
-
-    // top: 10,
-    // left: 10,
     borderColor: "#ddd",
     borderWidth: 3,
   },
