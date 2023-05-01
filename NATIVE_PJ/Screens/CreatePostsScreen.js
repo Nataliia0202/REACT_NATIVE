@@ -140,6 +140,13 @@ const name = useSelector(selectName);
     setPhoto(null);
     navigation.navigate("Публикации");
   };
+  const onSubmitClear = () => {
+    
+    setImageSignature("");
+    setImageLocation("");
+    setPhoto(null);
+    
+  };
 
   const flipCamera = () => {
     setType((current) =>
@@ -168,62 +175,73 @@ console.log("CreatePostsScreen");
       >
         <ScrollView styles={styles.box} backGroundColor="#fff">
           <View style={styles.container}>
-            {/* {isFocused && (
-              <Camera
-                style={styles.camera}
-                type={type}
-                ref={(ref) => {
-                  setCameraRef(ref);
-                }}
-              >
-                {photo && (
-                  <View style={styles.takePhotoContainer}>
-                    <Image
-                      source={{ uri: photo }}
-                      style={{ width: 200, height: 200 }}
-                    />
-                  </View>
-                )}
-                <TouchableOpacity
-                  style={styles.flipContainer}
-                  onPress={flipCamera}
+            {isFocused && (
+              <View style={styles.cameraWr}>
+                <Camera
+                  style={styles.camera}
+                  type={type}
+                  ref={(ref) => {
+                    setCameraRef(ref);
+                  }}
                 >
-                  <MaterialCommunityIcons
-                    name="camera-front-variant"
-                    size={24}
-                    style={{ color: "white" }}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.shootButton}
-                  onPress={takePhoto}
-                >
-                  <View style={styles.takePhotoOut}>
-                    <View style={styles.takePhotoInner}>
-                      <MaterialCommunityIcons name="camera-outline" size={24} />
+                  {photo && (
+                    <View style={styles.containerIMG}>
+                      <Image
+                        style={styles.photo}
+                        source={{
+                          uri: photo,
+                        }}
+                      />
                     </View>
-                  </View>
-                </TouchableOpacity>
-              </Camera>
-            )} */}
-            <View style={styles.containerIMG}>
-              {photo && <Image
+                  )}
+                  <TouchableOpacity
+                    style={styles.flipContainer}
+                    onPress={flipCamera}
+                  >
+                    <MaterialCommunityIcons
+                      name="camera-front-variant"
+                      size={24}
+                      style={{ color: "white" }}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.shootButton}
+                    onPress={takePhoto}
+                  >
+                    <View style={styles.takePhotoOut}>
+                      <View style={styles.takePhotoInner}>
+                        <MaterialCommunityIcons
+                          name="camera-outline"
+                          size={24}
+                        />
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                </Camera>
+              </View>
+            )}
+            {/* <View style={styles.containerIMG}>
+              <Image
                 style={styles.photo}
                 source={{
                   uri: photo,
                 }}
-              />}
-              <TouchableOpacity onPress={imageDownloaderHandler}>
-                <Text style={styles.text}>Загрузите фото</Text>
-              </TouchableOpacity>
-            </View>
+              />
+            </View> */}
+            <TouchableOpacity onPress={imageDownloaderHandler}>
+              <MaterialCommunityIcons
+                name="plus-box-multiple"
+                size={24}
+                color="#BDBDBD"
+              />
+            </TouchableOpacity>
             <View>
-            <TextInput
-              value={imageSignature}
-              onChangeText={imageTitleHandler}
-              placeholder="Название..."
-              style={styles.input}
-            />
+              <TextInput
+                value={imageSignature}
+                onChangeText={imageTitleHandler}
+                placeholder="Название..."
+                style={styles.input}
+              />
             </View>
             <View position="relative">
               <Pressable style={styles.mapButton}>
@@ -244,6 +262,25 @@ console.log("CreatePostsScreen");
             <TouchableOpacity onPress={onSubmit} style={styles.button}>
               <Text style={styles.buttonText}>Опубликовать</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              onPress={onSubmitClear}
+              style={{
+                flex: 1,
+                width: 70,
+                height: 40,
+                borderRadius: 20,
+                backgroundColor: "#fff",
+                alignItems: "center",
+                justifyContent: "center",
+                marginHorizontal: 150,
+              }}
+            >
+              <MaterialCommunityIcons
+                name="trash-can-outline"
+                color="#BDBDBD"
+                size={24}
+              />
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
@@ -259,9 +296,18 @@ const styles = StyleSheet.create({
     paddingRight: 20,
   },
   camera: {
-    height: 300,
-    marginTop: 30,
-    borderRadius: 10,
+    height: 250,
+
+    borderRadius: 8,
+  },
+  cameraWr: {
+    flex: 1,
+    width: 350,
+    height: 350,
+    marginTop: 20,
+    borderRadius: 8,
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   photoView: {
     flex: 1,
@@ -278,17 +324,7 @@ const styles = StyleSheet.create({
 
   shootButton: {
     alignSelf: "center",
-    top: 200,
-  },
-
-  takePhotoContainer: {
-    position: "absolute",
-    top: 10,
-    left: 10,
-    borderColor: "#ddd",
-    borderWidth: 3,
-    width: 200,
-    height: 200,
+    top: 150,
   },
 
   takePhotoOut: {
@@ -313,12 +349,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  image: {
-    marginLeft: "auto",
-    marginRight: "auto",
-    width: 343,
-    height: 240,
-  },
+  // image: {
+  //   marginLeft: "auto",
+  //   marginRight: "auto",
+  //   width: 343,
+  //   height: 240,
+  // },
 
   text: {
     marginTop: 10,
@@ -356,11 +392,26 @@ const styles = StyleSheet.create({
   },
   containerIMG: {
     flex: 1,
-    width: 350,
-    height: 200,
+    width: 300,
+    height: 350,
     backgroundColor: "#F6F6F6",
     alignSelf: "center",
     marginTop: 10,
     marginBottom: 20,
+
+    // top: 10,
+    // left: 10,
+    borderColor: "#ddd",
+    borderWidth: 3,
+  },
+  photo: {
+    position: "absolute",
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: 343,
+    height: 250,
+    borderRadius: 5,
+    top: -10,
+    left: -1,
   },
 });
