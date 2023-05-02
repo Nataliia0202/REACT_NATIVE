@@ -53,8 +53,8 @@ const name = useSelector(selectName);
         setErrorMsg("Permission to access location was denied");
         setLocation({
           coords: {
-            latitude: 50.011206,
-            longitude: 36.241585,
+            latitude: 50.34855795212235,
+            longitude: 30.420385218904713,
           },
         });
         return;
