@@ -68,31 +68,27 @@ const name = useSelector(selectName);
   
 
 
-  const uploadPhotoToStorage = async (uri) => {
+  const uploadPhotoToStorage = async (photo) => {
     try {
-      const response = await fetch(uri);
-          const file = await response.blob();
-          const imageId = v4();
+      const response = await fetch(photo);
+      const file = await response.blob();
+      const imageId = v4();
 
-          const storageRef = ref(storage, `postImage/${imageId}`);
-          await uploadBytes(storageRef, file);
-          const storageUrlPhoto = await getDownloadURL(
-            ref(storage, `postImage/${imageId}`)
-          );
-          console.log(storageUrlPhoto);
-          return storageUrlPhoto;
+      const storageRef = ref(storage, `postImage/${imageId}`);
+      await uploadBytes(storageRef, file);
+      const storageUrlPhoto = await getDownloadURL(
+        ref(storage, `postImage/${imageId}`)
+      );
+      console.log(storageUrlPhoto);
+      return storageUrlPhoto;
     } catch (error) {
       Alert.alert("Try again \n", error.message);
     }
-    
   };
 
-  
-  
 
   const uploadPostToStorage = async () => {
-    const photo = await uploadPhotoToStorage(uri);
-    console.log(imageSignature, imageLocation, location, photo);
+    
     try {
       const valueObj = {
         name,
