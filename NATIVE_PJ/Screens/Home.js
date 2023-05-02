@@ -60,7 +60,7 @@ export const Home = ({ navigation }) => {
         component={PostsScreen}
         options={{
           headerRight: () => (
-            <Pressable onPress={logOutHandler}>
+            <Pressable onPress={logOutHandler} style={styles.tab}>
               <MaterialCommunityIcons name="logout" size={24} color="black" />
             </Pressable>
           ),
@@ -69,7 +69,10 @@ export const Home = ({ navigation }) => {
       <Tab.Screen
         options={{
           headerRight: () => (
-            <Pressable onPress={() => navigation.navigate("Публикации")}>
+            <Pressable
+              onPress={() => navigation.navigate("Публикации")}
+              style={styles.tab}
+            >
               <MaterialCommunityIcons
                 name="arrow-left"
                 size={24}
@@ -85,3 +88,9 @@ export const Home = ({ navigation }) => {
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  tab: {
+    marginRight: 10,
+  } 
+})

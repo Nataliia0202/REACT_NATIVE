@@ -22,9 +22,9 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { useSelector } from "react-redux";
 import { selectID, selectName } from "../redux/selectors";
-import { useIsFocused } from "@react-navigation/native";
+
 import * as ImagePicker from "expo-image-picker";
-import { block } from "react-native-reanimated";
+
 
 export const CreatePostsScreen = ({ navigation }) => {
 const [imageSignature, setImageSignature] = useState("");
@@ -37,7 +37,7 @@ const [location, setLocation] = useState(null);
 const [errorMsg, setErrorMsg] = useState(null);
 const uid = useSelector(selectID);
 const name = useSelector(selectName);
-  const isFocused = useIsFocused();
+ 
   
 
   useEffect(() => {
@@ -148,6 +148,11 @@ const name = useSelector(selectName);
     
   };
 
+  const imageClearHandler = () => {
+    setPhoto(null);
+    setCameraRef(null);
+  }
+
   const flipCamera = () => {
     setType((current) =>
       current === CameraType.back ? CameraType.front : CameraType.back
@@ -175,8 +180,8 @@ console.log("CreatePostsScreen");
       >
         <ScrollView styles={styles.box} backGroundColor="#fff">
           <View style={styles.container}>
-            {isFocused && (
-              <View style={styles.cameraWr}>
+            <View style={styles.cameraWr}>
+              {photo === null ? (
                 <Camera
                   style={styles.camera}
                   type={type}
@@ -184,16 +189,6 @@ console.log("CreatePostsScreen");
                     setCameraRef(ref);
                   }}
                 >
-                  {photo && (
-                    <View style={styles.containerIMG}>
-                      <Image
-                        style={styles.photo}
-                        source={{
-                          uri: photo,
-                        }}
-                      />
-                    </View>
-                  )}
                   <TouchableOpacity
                     style={styles.flipContainer}
                     onPress={flipCamera}
@@ -218,23 +213,36 @@ console.log("CreatePostsScreen");
                     </View>
                   </TouchableOpacity>
                 </Camera>
-              </View>
+              ) : (
+                <View style={styles.containerIMG}>
+                  <Image
+                    style={styles.photo}
+                    source={{
+                      uri: photo,
+                    }}
+                  />
+                </View>
+              )}
+            </View>
+
+            {photo === null ? (
+              <TouchableOpacity onPress={imageDownloaderHandler}>
+                <MaterialCommunityIcons
+                  name="plus-box-multiple"
+                  size={24}
+                  color="#BDBDBD"
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={imageClearHandler}>
+                <MaterialCommunityIcons
+                  name="image-remove"
+                  size={24}
+                  color="#BDBDBD"
+                />
+              </TouchableOpacity>
             )}
-            {/* <View style={styles.containerIMG}>
-              <Image
-                style={styles.photo}
-                source={{
-                  uri: photo,
-                }}
-              />
-            </View> */}
-            <TouchableOpacity onPress={imageDownloaderHandler}>
-              <MaterialCommunityIcons
-                name="plus-box-multiple"
-                size={24}
-                color="#BDBDBD"
-              />
-            </TouchableOpacity>
+
             <View>
               <TextInput
                 value={imageSignature}
@@ -302,7 +310,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: 350,
     height: 350,
-   
+
     borderRadius: 8,
     marginLeft: "auto",
     marginRight: "auto",
@@ -389,14 +397,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   containerIMG: {
-    flex: 2,
-    width: 300,
+    justifyContent: "center",
+    width: 350,
     height: 350,
-    backgroundColor: "#F6F6F6",
-    alignSelf: "center",
-    marginTop: 10,
-    borderColor: "#ddd",
-    borderWidth: 3,
+    marginStart: 10,
+    borderRadius: 8,
+    marginLeft: "auto",
+    marginRight: "auto",
   },
   photo: {
     position: "absolute",
@@ -405,7 +412,6 @@ const styles = StyleSheet.create({
     width: 343,
     height: 250,
     borderRadius: 5,
-    top: -10,
-    left: -1,
+    
   },
 });
