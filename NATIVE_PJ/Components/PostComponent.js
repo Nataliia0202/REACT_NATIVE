@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/config";
 import { useEffect } from "react";
-
+import * as Location from "expo-location";
 
 export const PostItem = ({
   navigation,
@@ -48,7 +48,8 @@ export const PostItem = ({
     incrementLike();
   };
 
-  const pressMapMarker = () => {
+  const pressMapMarker = async () => {
+    
     console.log("fdret", location);
     navigation.navigate("Map", { location });
   };

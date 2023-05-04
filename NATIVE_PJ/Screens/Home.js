@@ -84,7 +84,11 @@ export const Home = ({ navigation }) => {
         name="Создать публикацию"
         component={CreatePostsScreen}
       />
-      <Tab.Screen name="Профиль" component={ProfileScreen} />
+      <Tab.Screen
+        name="Профиль"
+        component={ProfileScreen}
+        options={{ headerShown: false }}
+      />
     </Tab.Navigator>
   );
 };
