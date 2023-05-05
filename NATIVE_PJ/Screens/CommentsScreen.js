@@ -20,7 +20,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Comment from "../Components/Comment";
+import { Comment } from "../Components/Comment";
 import { db } from "../firebase/config";
 import date from "date-and-time";
 import uk from "date-and-time/locale/uk";
@@ -36,7 +36,7 @@ export const CommentsScreen = ({ route }) => {
 
   date.locale(uk);
 
-  const createPost = async (avatar, text, id) => {
+  const createPost = async () => {
     if (text === "") return;
     try {
       const time = date.format(new Date(), "D MMMM YYYY | HH:mm");

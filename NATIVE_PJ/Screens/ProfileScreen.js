@@ -25,7 +25,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAuth } from "firebase/auth";
 import { collection, query, onSnapshot, where } from "firebase/firestore";
 import { db } from "../firebase/config";
-import PostItem from "../Components/PostComponent";
+import { PostItem } from "../Components/PostComponent";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export const ProfileScreen = ({ navigation }) => {
@@ -37,21 +37,30 @@ export const ProfileScreen = ({ navigation }) => {
   const name = useSelector(selectName);
   const id = useSelector(selectID);
   const [posts, setPosts] = useState([]);
-  const [image, setImage] = useState();
+ 
+
+  console.log("ProfileScreen", isAuth);
   
-// const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
+useEffect(() => {
+  if (!isAuth) return;
 
-// useEffect(() => {
-//   const onChange = () => {
-//     const width = Dimensions.get("window").width;
+  setAvatar(auth.currentUser.photoURL);
+  const q = query(collection(db, "posts"), where("uid", "==", id));
+  const unsubscribe = onSnapshot(q, (querySnapshot) => {
+    const post = [];
+    querySnapshot.forEach((doc) =>
+      post.push({
+        ...doc.data(),
+        id: doc.id,
+      })
+    );
+    setPosts(post);
+  });
+  return () => {
+    unsubscribe();
+  };
+}, []);
 
-//     setdimensions(width);
-//   };
-//   Dimensions.addEventListener("change", onChange);
-//   return () => {
-//     Dimensions.removeEventListener("change", onChange);
-//   };
-// }, []);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -88,26 +97,7 @@ export const ProfileScreen = ({ navigation }) => {
   });
 
   
-  useEffect(() => {
-    if (!isAuth) return;
-
-    setAvatar(auth.currentUser.photoURL);
-    const q = query(collection(db, "posts"), where("uid", "==", id));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const post = [];
-      querySnapshot.forEach((doc) =>
-        post.push({
-          ...doc.data(),
-          id: doc.id,
-        })
-      );
-      setPosts(post);
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
-
+  
 
 
   return (
