@@ -27,13 +27,19 @@ import * as ImagePicker from "expo-image-picker";
 
 
 export const CreatePostsScreen = ({ navigation }) => {
-const [imageSignature, setImageSignature] = useState("");
+  const [imageSignature, setImageSignature] = useState("");
+  const [description, setDescription] = useState("");
 const [imageLocation, setImageLocation] = useState("");
 const [hasPermission, setHasPermission] = useState(null);
 const [cameraRef, setCameraRef] = useState(null);
 const [type, setType] = useState(Camera.Constants.Type.back);
 const [photo, setPhoto] = useState(null);
-const [location, setLocation] = useState(null);
+const [location, setLocation] = useState({
+  latitude: 50.34855795212235,
+  longitude: 30.420385218904713,
+  latitudeDelta: 0.01,
+  longitudeDelta: 0.06,
+});
 const [errorMsg, setErrorMsg] = useState(null);
 const uid = useSelector(selectID);
 const name = useSelector(selectName);
@@ -94,6 +100,7 @@ const name = useSelector(selectName);
         name,
         uid,
         imageSignature,
+        description,
         imageLocation,
         photo,
         commentCounter: 0,
@@ -111,6 +118,10 @@ const name = useSelector(selectName);
   const imageTitleHandler = (text) => {
   setImageSignature(text);
   };
+
+  const imageDescription = (text) => {
+    setDescription(text);
+  }
   
   const imageLocationHandler = (text) => {
     setImageLocation(text);
@@ -135,13 +146,15 @@ const name = useSelector(selectName);
   const onSubmit = async () => {
     await uploadPostToStorage();
     setImageSignature("");
+    setDescription("");
     setImageLocation("");
     setPhoto(null);
+    
     navigation.navigate("Публикации");
   };
 
   const onSubmitClear = () => {
-    
+    setDescription("")
     setImageSignature("");
     setImageLocation("");
     setPhoto(null);
@@ -167,7 +180,10 @@ const name = useSelector(selectName);
       console.log("photo", photo);
     }
   };
- 
+ const pressMapMarker = async () => {
+   console.log("fdret", location);
+   navigation.navigate("Map", { location });
+ };
 
 console.log("CreatePostsScreen");
 
@@ -251,8 +267,16 @@ console.log("CreatePostsScreen");
                 style={styles.input}
               />
             </View>
+            <View>
+              <TextInput
+                value={description}
+                onChangeText={imageDescription}
+                placeholder="Добавить описание..."
+                style={styles.input}
+              />
+            </View>
             <View position="relative">
-              <Pressable style={styles.mapButton}>
+              <Pressable style={styles.mapButton} onPress={pressMapMarker}>
                 <MaterialCommunityIcons
                   name="map-marker-outline"
                   size={24}
@@ -302,6 +326,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 20,
     paddingRight: 20,
+    justifyContent:'center',
   },
   camera: {
     height: 250,
@@ -309,7 +334,7 @@ const styles = StyleSheet.create({
   cameraWr: {
     justifyContent: "center",
     width: 350,
-    height: 350,
+    height: 300,
 
     borderRadius: 8,
     marginLeft: "auto",

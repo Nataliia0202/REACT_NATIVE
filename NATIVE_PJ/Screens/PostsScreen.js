@@ -45,6 +45,7 @@ export const PostsScreen = ({ navigation }) => {
    const getItem = (posts, index) => ({
      title: posts[index].imageSignature,
      photo: posts[index].photo,
+     description:posts[index].description,
      imageLocation: posts[index].imageLocation,
      uid: posts[index].uid,
      id: posts[index].id,
@@ -72,6 +73,7 @@ export const PostsScreen = ({ navigation }) => {
                   navigation={navigation}
                   title={item.title}
                   photo={item.photo}
+                  description={item.description}
                   imageLocation={item.imageLocation}
                   uid={item.uid}
                   id={item.id}

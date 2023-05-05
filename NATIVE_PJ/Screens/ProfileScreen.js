@@ -90,6 +90,7 @@ useEffect(() => {
   const getItem = (posts, index) => ({
     title: posts[index].imageSignature,
     photo: posts[index].photo,
+    description: posts[index].description,
     imageLocation: posts[index].imageLocation,
     uid: posts[index].uid,
     id: posts[index].id,
@@ -131,8 +132,9 @@ useEffect(() => {
             renderItem={({ item }) => (
               <PostItem
                 navigation={navigation}
-                title={item.imageSignature}
+                title={item.title}
                 photo={item.photo}
+                description={item.description}
                 imageLocation={item.imageLocation}
                 uid={item.uid}
                 id={item.id}

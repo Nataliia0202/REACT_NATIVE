@@ -66,10 +66,7 @@ export const Rout = () => {
               options={{ headerShown: false }}
             />
             <AuthStack.Screen name="Map" component={Map} />
-            <AuthStack.Screen
-              name="CommentsScreen"
-              component={CommentsScreen}
-            />
+            <AuthStack.Screen name="Комментарии" component={CommentsScreen} />
             <AuthStack.Screen name="PostsScreen" component={PostsScreen} />
           </AuthStack.Navigator>
         );

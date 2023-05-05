@@ -1,23 +1,25 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text, Pressable, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import {
   doc,
-  addDoc,
   updateDoc,
   increment,
   getDoc,
-  collection,
-  getDocs,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { useEffect } from "react";
-import * as Location from "expo-location";
 
 export const PostItem = ({
   navigation,
   photo,
   title,
+  description,
   imageLocation,
   id,
   uid,
@@ -40,7 +42,7 @@ export const PostItem = ({
 
   const pressComment = () => {
     console.log("pressComment");
-    navigation.navigate("CommentsScreen", { photo, id, uid });
+    navigation.navigate("Комментарии", { photo, id, uid });
   };
 
   const pressLike = () => {
@@ -49,7 +51,6 @@ export const PostItem = ({
   };
 
   const pressMapMarker = async () => {
-    
     console.log("fdret", location);
     navigation.navigate("Map", { location });
   };
@@ -61,26 +62,29 @@ export const PostItem = ({
       <Image style={styles.image} source={{ uri: photo }} />
       <Text style={styles.signature}>{title}</Text>
       <View style={styles.signatureBox}>
-        <Pressable onPress={pressComment} style={styles.viewBox}>
+        <TouchableOpacity onPress={pressComment} style={styles.viewBox}>
           <MaterialCommunityIcons name="comment" color="#ff6c00" size={24} />
           <Text style={styles.view}>{comment}</Text>
-        </Pressable>
-        <Pressable onPress={pressLike} style={styles.likeBox}>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={pressLike} style={styles.likeBox}>
           <MaterialCommunityIcons
             name="thumb-up-outline"
             color="#ff6c00"
             size={24}
           />
           <Text style={styles.like}>{like}</Text>
-        </Pressable>
-        <Pressable onPress={pressMapMarker} style={styles.localBox}>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={pressMapMarker} style={styles.localBox}>
           <MaterialCommunityIcons
             name="map-marker-outline"
             color="#aaa"
             size={24}
           />
           <Text style={styles.local}>{imageLocation}</Text>
-        </Pressable>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.description}>
+        <Text style={styles.signatureDis}>{description}</Text>
       </View>
     </View>
   );
@@ -101,6 +105,13 @@ const styles = StyleSheet.create({
   signature: {
     marginTop: 10,
     marginLeft: 35,
+  },
+  signatureDis: {
+    marginTop: 10,
+    marginLeft: 35,
+  },
+  description: {
+    
   },
 
   signatureBox: {
