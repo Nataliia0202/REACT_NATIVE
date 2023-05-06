@@ -103,6 +103,7 @@ const name = useSelector(selectName);
         description,
         imageLocation,
         photo,
+        location,
         commentCounter: 0,
       };
       console.log(valueObj);
@@ -175,7 +176,9 @@ const name = useSelector(selectName);
   const takePhoto = async () => {
     if (cameraRef) {
       const photo = await cameraRef.takePictureAsync();
-     
+     const location = await Location.getCurrentPositionAsync();
+     console.log("latitude", location.coords.latitude);
+     console.log("longitude", location.coords.longitude);
       setPhoto(photo.uri);
       console.log("photo", photo);
     }
